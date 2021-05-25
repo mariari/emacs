@@ -46,6 +46,8 @@
 (load-library "~/.emacs.d/flash-paren.el")
 (flash-paren-mode 1)
 
+;; Dired---------------------------------------------------------------
+(setq dired-dwim-target t)
 ;; ERC-----------------------------------------------------------------
 ;; (defadvice erc-track-find-face (around erc-track-find-face-promote-query activate)
 ;;   (if (erc-query-buffer-p)
