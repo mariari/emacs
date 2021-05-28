@@ -31,7 +31,7 @@
     (mapc (lambda (mode) (condition-case nil
                              (if (and (symbolp mode) (symbol-value mode))
                                  (add-to-list 'active-modes mode))
-                           (error nil) ))
+                           (error nil)))
           minor-mode-list)
     (message "Active modes are %s" active-modes)))
 
@@ -143,6 +143,8 @@
   (define-key company-active-map (kbd "<tab>") 'company-manual-begin))
 (global-set-key (kbd "C-<tab>") 'company-manual-begin)
 
+(setf company-idle-delay nil)
+
 (yas-minor-mode)
 ;;White-Space---------------------------------------------------------
 (defun tf-toggle-show-trailing-whitespace ()
@@ -151,6 +153,10 @@
   (setq show-trailing-whitespace (not show-trailing-whitespace)))
 
 (setq-default show-trailing-whitespace (not show-trailing-whitespace))
+
+(add-hook 'Info-mode-hook
+          (lambda ()
+            (tf-toggle-show-trailing-whitespace)))
 ;---------------------------------------------------------------------
 ;;Ansi-tem-------------------------------------------------------------
 ;; (global-set-key (kbd "C-x t") 'ansi-term)
@@ -579,6 +585,7 @@
             (require 'ox-latex)
             (unless (boundp 'org-latex-classes)
               (setq org-latex-classes nil))
+            (setf org-export-headline-levels 4)
             (add-to-list 'org-latex-classes
                          '("article"
                            "\\documentclass{article}"
@@ -588,10 +595,6 @@
             (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
             (setq org-latex-default-packages-alist
                   (cons '("mathletters" "ucs" nil) org-latex-default-packages-alist))
-
-            (add-to-list 'org-export-latex-packages-alist '("" "listings"))
-            (add-to-list 'org-export-latex-packages-alist '("" "color"))
-            (add-to-list 'org-export-latex-packages-alist '("" "minted"))
             (setq org-latex-listings 'minted
                   org-latex-pdf-process
                   '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
@@ -750,6 +753,7 @@
 
 (setq-default c-basic-offset 4)
 ;;--------------------------------------------------------------------
+
 ;;C++-----------------------------------------------------------------
 (add-hook 'c++-mode-hook 'irony-mode)
 (add-hook 'c-mode-hook 'irony-mode)
@@ -796,8 +800,8 @@
 (global-xah-math-input-mode 1)
 (xah-math-input--add-cycle ["::" "∷"])
 (xah-math-input--add-cycle ["-o" "⊸"])
-
 ;;-------------------------------------------------------------------
+
 ;;---------------------------------------------------------------------
 ;; For emacs25
 
