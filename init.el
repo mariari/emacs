@@ -56,7 +56,7 @@
   (eval `(backquote (use-package ,@args))))
 
 (defun gen-hooks (modes hook)
-  (cl-map 'list (lambda (x) (cons x hook)) modes))
+  (mapcar (lambda (x) (cons x hook)) modes))
 
 ;;; Core Emacs Improvements
 (use-package linum-relative
@@ -422,6 +422,7 @@
         slime-repl-mode
         inferior-lisp-mode
         mrepl-mode
+        sly-mrepl-mode
         comint-mode))
 
 (%use-package lispy
@@ -921,19 +922,19 @@
 (add-hook 'comint-mode-hook
           #'add-pragmatapro-symbol-keywords)
 
-(my-multi-add-hook 'my-pretty-lambda
-                   '(scheme-mode-hook
-                     org-mode-hook
-                     lisp-mode-hook
-                     common-mode-hook
-                     inferior-lisp-mode-hook
-                     comint-mode-hook
-                     racket-mode-hook
-                     hy-mode-hook
-                     shen-mode-hook
-                     inferior-shen-mode-hook
-                     ;; slime-repl-mode-hook
-                     ))
+;; breaks lispy in the sly repl?
+;; (my-multi-add-hook 'my-pretty-lambda
+;;                    '(scheme-mode-hook
+;;                      org-mode-hook
+;;                      lisp-mode-hook
+;;                      comint-mode-hook
+;;                      racket-mode-hook
+;;                      hy-mode-hook
+;;                      sly-mrepl-mode-hook
+;;                      shen-mode-hook
+;;                      inferior-shen-mode-hook
+;;                      ;; slime-repl-mode-hook
+;;                      ))
 
 (my-multi-add-hook 'my-pretty-clojure '(clojure-mode-hook cider-repl-mode-hook))
 
