@@ -1,4 +1,4 @@
-;;; Commentary:
+;; Commentary:
 ;;; Code:
 
 ;;; Use straight.el and use-package for package management
@@ -97,15 +97,13 @@
 
 (global-unset-key (kbd "C-x c"))
 (use-package helm
-  :custom
-  ('helm-boring-file-regexp-list
-   (append '("\\.checked$"
-             "\\.hints$")
-           helm-boring-file-regexp-list))
-
+    :custom
+  (setq helm-boring-file-regexp-list
+        (append '("\\.checked$"
+                  "\\.hints$")
+                helm-boring-file-regexp-list))
   :config
   (setq helm-ff-skip-boring-files t)
-
   (setq helm-locate-fuzzy-match nil)
 
   (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
@@ -113,9 +111,9 @@
         helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         Helm-ff-file-name-history-use-recentf t)
-
+  (setq helm-autoresize-max-height 30)
+  (helm-autoresize-mode 1)
   (helm-mode 1)
-
   :bind (("C-c h" . helm-command-prefix)
          ("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)
@@ -285,11 +283,12 @@
 
 ;;; Navigation
 (use-package evil
-  :defer nil
-  :config
-  (setq evil-insert-state-map (make-sparse-keymap))
-  (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state) ; improve this?
-  (evil-mode 1))
+    :defer nil
+    :config
+    (setq evil-disable-insert-state-bindings t)
+    (setq evil-insert-state-map (make-sparse-keymap))
+    (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state) ; improve this?
+    (evil-mode 1))
 
 (use-package iy-go-to-char
   :bind (("C-c f" . iy-go-up-to-char)

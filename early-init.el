@@ -1,6 +1,6 @@
 ;;; early-init.el - loaded before our init.el; lets us switch package
 ;;; managers with relative ease.
-;;; 
+;;;
 ;;; Requires Emacs 27.1 and above!
 
 ;; And while we're here, we might as well defer GCing for a bit to
