@@ -14,9 +14,15 @@
 
 (set-fontset-font t nil (font-spec :size 20 :name "WenQuanYi Micro Hei Mono:antialias=true"))
 
-(global-set-key (kbd "C-:") 'sr-speedbar-toggle)
+
 (global-set-key (kbd "C-S-<iso-lefttab>") 'indent-relative)
 
+
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "nyxt")
+
+(menu-bar-mode -1)
+(delete-selection-mode 1)
 
 ;;; Custom functions ----------------------------------------------------
 
@@ -96,6 +102,7 @@
     ("l" text-scale-decrease "out")))
 
 (global-unset-key (kbd "C-x c"))
+
 (use-package helm
     :custom
   (setq helm-boring-file-regexp-list
@@ -112,29 +119,39 @@
         helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
         Helm-ff-file-name-history-use-recentf t)
   (setq helm-autoresize-max-height 30)
-  (helm-autoresize-mode 1)
   (helm-mode 1)
+  ;; if you don't defer this isn't valid?!
+  (helm-autoresize-mode 1)
   :bind (("C-c h" . helm-command-prefix)
          ("M-x" . helm-M-x)
+         ("C-x b" . helm-buffers-list)
          ("C-x C-f" . helm-find-files)
          ("C-c h" . helm-command-prefix)
          ;; For locate and find. Find is for current directory while locate is for everything and
          ;; I've added fuzzy... to get unfuzzy results add ""
          ("C-z" . helm-find)
-         ("C-x w" . helm-locate)
+         ("C-x w" . helm-do-grep-ag)
          :map helm-map
          ("<tab>" . helm-execute-persistent-action) ; rebind tab to run persistent action
-         ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
-         ("C-z" . helm-select-action)))           ; list actions with C-z
+         ("C-i" . helm-execute-persistent-action)   ; make TAB works in terminal
+         ("C-z" . helm-select-action)))             ; list actions with C-z
+
+;; (use-package helm-autoresize-mode
+;;   :hook
+;;   ((helm-mode . helm-autoresize-mode))
+;;   :config
+;;   (helm-autoresize-mode 1)
+;;   :defer nil
+;;   :straight nil
+;;   :after helm)
 
 (use-package helm-company
-  :after helm)
+    :after helm)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "nyxt")
-
-(menu-bar-mode -1)
-(delete-selection-mode 1)
+(use-package woman
+  :bind
+  (:map help-map
+   ("W" . woman)))
 
 ;;; Text Processing
 (use-package flyspell
@@ -229,7 +246,10 @@
 
 (use-package ranger)
 
-(use-package vterm)
+(use-package vterm
+  :hook
+  (vterm-mode . (lambda ()
+                  (setq show-trailing-whitespace nil))))
 
 (use-package esup)
 

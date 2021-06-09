@@ -94,7 +94,9 @@
  '(rainbow-identifiers-cie-l*a*b*-lightness 30)
  '(rainbow-identifiers-cie-l*a*b*-saturation 35)
  '(safe-local-variable-values
-   '((eval when
+   '((eval setq byte-compile-not-obsolete-vars
+      '(display-buffer-function))
+     (eval when
       (require 'rainbow-mode nil t)
       (rainbow-mode 1))
      (eval cl-flet
