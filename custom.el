@@ -70,6 +70,7 @@
  '(lisp-lambda-list-keyword-alignment t)
  '(lisp-lambda-list-keyword-parameter-alignment t)
  '(lispy-no-space t)
+ '(lsp-ui-sideline-enable nil)
  '(main-line-color1 "#191919")
  '(main-line-color2 "#111111")
  '(matlab-fill-code nil)
