@@ -321,10 +321,15 @@
 ;;; Programming -----------------------------------------------------------
 ;; General
 (use-package lsp-mode
-  :config
+    :config
   (setq lsp-ui-doc-enable nil)
+  (setq lsp-keymap-prefix "C-c s")
+  (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
+  :hook (lsp-mode . (lambda ()
+                      (let ((lsp-keymap-prefix "C-c s"))
+                        (lsp-enable-which-key-integration))))
   :bind (:map lsp-mode-map
-         ("C-c C-c" . lsp-ui-doc-glance)))
+              ("C-c C-c" . lsp-ui-doc-glance)))
 
 (use-package lsp-ui
   :after lsp-mode)
