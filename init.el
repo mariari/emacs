@@ -327,12 +327,12 @@
   (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
   :hook (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c s"))
-                        (lsp-enable-which-key-integration))))
-  :bind (:map lsp-mode-map
-              ("C-c C-c" . lsp-ui-doc-glance)))
+                        (lsp-enable-which-key-integration)))))
 
 (use-package lsp-ui
-  :after lsp-mode)
+    :after lsp-mode
+    :bind (:map lsp-mode-map
+                ("C-c C-c" . lsp-ui-doc-glance))  )
 
 (use-package eldoc)
 
