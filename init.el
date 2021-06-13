@@ -310,6 +310,16 @@
     (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state) ; improve this?
     (evil-mode 1))
 
+(defun my/fix-evil-hiding-minor-mode-map (&rest _args)
+  "See `https://github.com/syl20bnr/spacemacs/issues/9391'"
+  (let ((mjm-keymap (intern-soft (format "%s-map" major-mode))))
+    (when mjm-keymap
+      (setq evil-mode-map-alist
+	    (cl-loop for (c . k) in evil-mode-map-alist
+		     unless (and (eq c t) (eq k (symbol-value mjm-keymap)))
+		     collect (cons c k))))))
+(advice-add 'evil-normalize-keymaps :after #'my/fix-evil-hiding-minor-mode-map)
+
 (use-package iy-go-to-char
   :bind (("C-c f" . iy-go-up-to-char)
          ("C-q" . iy-go-up-to-char)
@@ -684,7 +694,7 @@
           ;; ("False"       . ?𝐹)
           )))
 
-(defun my-prett-eylixir ()
+(defun my-pretty-elixir ()
   (setq prettify-symbols-alist
         '(("lambda"    . 955)           ; λ
           ("fn"        . 955)           ; λ
