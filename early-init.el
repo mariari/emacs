@@ -12,7 +12,8 @@
  (lambda () (setq gc-cons-threshold (* 100 1024))))
 
 ;; Replace package.el with straight.el
-(setq package-enable-at-startup nil)
+;; (setq package-enable-at-startup nil)
+
 (setq straight-check-for-modifications '(check-on-save find-when-checking))
 (defvar bootstrap-version)
 (let ((bootstrap-file

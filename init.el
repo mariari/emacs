@@ -310,15 +310,15 @@
     (define-key evil-insert-state-map (kbd "<escape>") 'evil-normal-state) ; improve this?
     (evil-mode 1))
 
-(defun my/fix-evil-hiding-minor-mode-map (&rest _args)
-  "See `https://github.com/syl20bnr/spacemacs/issues/9391'"
-  (let ((mjm-keymap (intern-soft (format "%s-map" major-mode))))
-    (when mjm-keymap
-      (setq evil-mode-map-alist
-	    (cl-loop for (c . k) in evil-mode-map-alist
-		     unless (and (eq c t) (eq k (symbol-value mjm-keymap)))
-		     collect (cons c k))))))
-(advice-add 'evil-normalize-keymaps :after #'my/fix-evil-hiding-minor-mode-map)
+;; (defun my/fix-evil-hiding-minor-mode-map (&rest _args)
+;;   "See `https://github.com/syl20bnr/spacemacs/issues/9391'"
+;;   (let ((mjm-keymap (intern-soft (format "%s-map" major-mode))))
+;;     (when mjm-keymap
+;;       (setq evil-mode-map-alist
+;; 	    (cl-loop for (c . k) in evil-mode-map-alist
+;; 		     unless (and (eq c t) (eq k (symbol-value mjm-keymap)))
+;; 		     collect (cons c k))))))
+;; (advice-add 'evil-normalize-keymaps :after #'my/fix-evil-hiding-minor-mode-map)
 
 (use-package iy-go-to-char
   :bind (("C-c f" . iy-go-up-to-char)
@@ -463,7 +463,9 @@
 (%use-package lispy
   :hook ,(gen-hooks *lisp-modes* 'lispy-mode)
   :config
-  (setq lispy-use-sly t))
+  ;; temporary removal
+  (setq lispy-use-sly t)
+  )
 
 (use-package geiser
   :config
@@ -479,30 +481,83 @@
 (use-package geiser-chez)
 (use-package geiser-racket)
 
-(use-package racket-mode)
+(use-package racket-mode
+  :config
+  (defmacro racket-delete (function-name)
+    "a flawed way to remove the buffer creation the racket repl does"
+    `(progn
+       (advice-add ',function-name :after
+                   (lambda ()
+                     (when (condition-case nil
+                               (select-window (get-buffer-window racket-repl-buffer-name t))
+                             (error nil))
+                       (delete-windows-on "*Racket REPL*" t))))
+       (lambda () (interactive)
+         (,function-name)
+         (when (condition-case nil
+                   (select-window (get-buffer-window racket-repl-buffer-name t))
+                 (error nil))
+           (delete-window)))))
+
+  (define-key racket-mode-map (kbd "C-c C-k")
+    (racket-delete racket-run-and-switch-to-repl))
+  (define-key racket-mode-map (kbd "C-M-x")
+    (racket-delete racket-send-definition))
+  (define-key racket-mode-map (kbd "C-c C-r")
+    (racket-delete racket-send-region))
+  (define-key racket-mode-map (kbd "C-c C-c")
+    (racket-delete racket-send-definition))
+  (define-key racket-mode-map (kbd "C-c C-m")
+    (racket-delete racket-run-module-at-point)))
+
+  ;; (define-key racket-mode-map (kbd "C-x C-e")
+  ;;   (lambda () (interactive) (racket-send-last-sexp) (delete-windows-on "*Racket REPL*" t)))
 
 (use-package scheme-complete)
 
+
+
+;; (straight-use-package '(sly :source el-get))
+
 (use-package sly
-  :config
+    :config
   (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
-(use-package sly-asdf)
-(use-package sly-macrostep)
+
+;; (use-package slime
+;;     :config
+;;   (slime-setup '(slime-asdf
+;;                     slime-autodoc
+;;                     slime-editing-commands
+;;                     slime-fancy
+;;                     slime-fontifying-fu
+;;                     slime-fuzzy
+;;                     slime-indentation
+;;                     slime-mdot-fu
+;;                     slime-package-fu
+;;                     slime-references
+;;                     slime-repl
+;;                     slime-sbcl-exts
+;;                     slime-scratch
+;;                  slime-xref-browser))
+;;   (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
+
+;; (use-package sly-asdf :straight nil :ensure t)
+;; (use-package sly-macrostep :straight nil :ensure t)
 
 ; CL indentation and font things
 
-(setq lisp-indent-function 'common-lisp-indent-function)
+;; (setq lisp-indent-function 'common-lisp-indent-function)
 
-(put 'defmodule-named 'common-lisp-indent-function
-     (list 4 '&lambda '&lambda '&body))
+;; (put 'defmodule-named 'common-lisp-indent-function
+;;      (list 4 '&lambda '&lambda '&body))
 
-(put 'defmodule 'common-lisp-indent-function
-     (list 4 '&lambda 2 '&body))
+;; (put 'defmodule 'common-lisp-indent-function
+;;      (list 4 '&lambda 2 '&body))
 
-(font-lock-add-keywords
- 'lisp-mode
- '(("defmodule"
-    2 font-lock-function-name-face font-lock-preprocessor-face t)))
+;; (font-lock-add-keywords
+;;  'lisp-mode
+;;  '(("defmodule"
+;;     2 font-lock-function-name-face font-lock-preprocessor-face t)))
 
 
 ;; Haskell
@@ -980,3 +1035,4 @@
 (my-multi-add-hook 'my-pretty-elixir '(elixir-mode-hook alchemist-iex-mode-hook))
 
 (global-prettify-symbols-mode 1)
+(put 'dired-find-alternate-file 'disabled nil)
