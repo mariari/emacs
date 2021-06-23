@@ -92,6 +92,14 @@
 
 (use-package edit-indirect)
 
+;; Useful for refactoring code do
+;; ag-project-regexp
+(use-package ag
+  :defer nil)
+
+;; then run wgrep-change-to-wrgrep-cmode C-cp to make the buffer editable
+(use-package wgrep
+  :after ag)
 
 (use-package hydra
   :defer nil
@@ -168,6 +176,7 @@
 (use-package poporg)
 (use-package org
   :after iy-go-to-char ; interestingly iy breaks without this declaration. probably something to do with the hook below
+  :hook ((org-mode . auto-fill-mode))
   :mode "\\.\\(org\\|txt\\)$"
   :config
 
@@ -219,7 +228,7 @@
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE" "CREDIBLE" "POOR" "MIXED")))
 
-  :bind (("C-c f" . auto-fill-mode)
+  :bind (;; ("C-c f" . auto-fill-mode)
          ("C-c" . poporg-dwim)))
 
 ; Use spaces, not tabs.
