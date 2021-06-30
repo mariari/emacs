@@ -1033,19 +1033,18 @@
 (add-hook 'comint-mode-hook
           #'add-pragmatapro-symbol-keywords)
 
-;; breaks lispy in the sly repl?
-;; (my-multi-add-hook 'my-pretty-lambda
-;;                    '(scheme-mode-hook
-;;                      org-mode-hook
-;;                      lisp-mode-hook
-;;                      comint-mode-hook
-;;                      racket-mode-hook
-;;                      hy-mode-hook
-;;                      sly-mrepl-mode-hook
-;;                      shen-mode-hook
-;;                      inferior-shen-mode-hook
-;;                      ;; slime-repl-mode-hook
-;;                      ))
+(my-multi-add-hook 'my-pretty-lambda
+                   '(scheme-mode-hook
+                     org-mode-hook
+                     lisp-mode-hook
+                     comint-mode-hook
+                     racket-mode-hook
+                     hy-mode-hook
+                     sly-mrepl-mode-hook
+                     shen-mode-hook
+                     inferior-shen-mode-hook
+                     ;; slime-repl-mode-hook
+                     ))
 
 (my-multi-add-hook 'my-pretty-clojure '(clojure-mode-hook cider-repl-mode-hook))
 
