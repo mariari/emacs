@@ -472,9 +472,7 @@
 (%use-package lispy
   :hook ,(gen-hooks *lisp-modes* 'lispy-mode)
   :config
-  ;; temporary removal
-  (setq lispy-use-sly t)
-  )
+  (setq lispy-use-sly t))
 
 (use-package geiser
   :config
@@ -524,13 +522,27 @@
 
 (use-package scheme-complete)
 
+;; While the straight.el maintainers are fighting
+;; over the syntax and semantics of putting this
+;; all inside of the :straight keyword, use their
+;; work around.
+(let ((straight-current-profile 'pinned))
+  ;; Pin a working sly commit
+  (add-to-list 'straight-x-pinned-packages
+               '("sly" . "1346967b8a35cc93aa695a80c74b6aa82e49923e"))
 
-
-;; (straight-use-package '(sly :source el-get))
-
-(use-package sly
+  ;; Ad-hoc, but it doesn't matter. Upcoming
+  ;; straight.el release will get rid of this.
+  (defun maybe-pin-and-pull (package)
+    (unless (file-exists-p "~/.emacs.d/straight/versions/pinned.el")
+      (straight-x-freeze-versions)
+      (straight-x-pull-all)
+      (straight-rebuild-package (symbol-name package))))
+  
+  (use-package sly
     :config
-  (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
+    (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
+  (maybe-pin-and-pull 'sly))
 
 ;; (use-package slime
 ;;     :config

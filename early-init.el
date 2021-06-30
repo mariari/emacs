@@ -11,9 +11,13 @@
  5 nil
  (lambda () (setq gc-cons-threshold (* 100 1024))))
 
-;; Replace package.el with straight.el
-;; (setq package-enable-at-startup nil)
-
+;;; Replace package.el with straight.el
+;; Tell straight.el about the profiles we are going to be using.
+(setq straight-profiles
+      '((nil . "default.el")
+        ;; Packages which are pinned to a specific commit.
+        (pinned . "pinned.el")))
+;; Bootstrap straight.el
 (setq straight-check-for-modifications '(check-on-save find-when-checking))
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -27,3 +31,7 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(load-library "straight-x")
+(autoload #'straight-x-pull-all "straight-x")
+(autoload #'straight-x-freeze-versions "straight-x")
