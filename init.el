@@ -175,9 +175,8 @@
 
 (use-package poporg)
 (use-package org
-  :after iy-go-to-char ; interestingly iy breaks without this declaration. probably something to do with the hook below
   :hook ((org-mode . auto-fill-mode))
-  :mode "\\.\\(org\\|txt\\)$"
+  :mode ("\\.\\(org\\|txt\\)$" . org-mode)
   :config
 
   (defun my-org-retrieve-url-from-point ()
@@ -228,8 +227,8 @@
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE" "CREDIBLE" "POOR" "MIXED")))
 
-  :bind (;; ("C-c f" . auto-fill-mode)
-         ("C-c" . poporg-dwim)))
+  :bind (("C-c f" . auto-fill-mode)
+         ("C-c e" . my-org-retrieve-url-from-point)))
 
 ; Use spaces, not tabs.
 (setq-default indent-tabs-mode nil)
