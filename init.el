@@ -388,6 +388,7 @@
   (smartparens-global-mode 1))
 
 (use-package xah-math-input
+  :straight (:host github :repo "emacsmirror/xah-math-input")
   :defer nil
   :config
   (global-xah-math-input-mode 1)
