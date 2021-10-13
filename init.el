@@ -345,7 +345,11 @@
   (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
   :hook (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c s"))
-                        (lsp-enable-which-key-integration)))))
+                        (lsp-enable-which-key-integration))))
+  :hook (c-mode-common . lsp))
+
+(use-package yasnippet
+  :hook (lsp-mode . yas-minor-mode))
 
 (use-package lsp-ui
     :after lsp-mode
@@ -529,7 +533,9 @@
 
 (use-package sly
     :config
-  (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
+  (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  ;; (setq inferior-lisp-program "clasp")
+  )
 
 ;; (use-package slime
 ;;     :config
