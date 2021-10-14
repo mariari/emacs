@@ -175,9 +175,8 @@
 
 (use-package poporg)
 (use-package org
-  :after iy-go-to-char ; interestingly iy breaks without this declaration. probably something to do with the hook below
   :hook ((org-mode . auto-fill-mode))
-  :mode "\\.\\(org\\|txt\\)$"
+  :mode ("\\.\\(org\\|txt\\)$" . org-mode)
   :config
 
   (defun my-org-retrieve-url-from-point ()
@@ -228,8 +227,8 @@
   (setq org-todo-keywords
         '((sequence "TODO" "|" "DONE" "CREDIBLE" "POOR" "MIXED")))
 
-  :bind (;; ("C-c f" . auto-fill-mode)
-         ("C-c" . poporg-dwim)))
+  :bind (("C-c f" . auto-fill-mode)
+         ("C-c e" . my-org-retrieve-url-from-point)))
 
 ; Use spaces, not tabs.
 (setq-default indent-tabs-mode nil)
@@ -349,7 +348,11 @@
   (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
   :hook (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c s"))
-                        (lsp-enable-which-key-integration)))))
+                        (lsp-enable-which-key-integration))))
+  :hook (c-mode-common . lsp))
+
+(use-package yasnippet
+  :hook (lsp-mode . yas-minor-mode))
 
 (use-package lsp-ui
     :after lsp-mode
@@ -388,6 +391,7 @@
   (smartparens-global-mode 1))
 
 (use-package xah-math-input
+  :straight (:host github :repo "emacsmirror/xah-math-input")
   :defer nil
   :config
   (global-xah-math-input-mode 1)
@@ -534,7 +538,9 @@
 
 (use-package sly
     :config
-  (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
+  (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  ;; (setq inferior-lisp-program "clasp")
+  )
 
 ;; (use-package slime
 ;;     :config

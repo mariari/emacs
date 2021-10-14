@@ -34,7 +34,9 @@
  '(fringe-mode '(1 . 1) nil (fringe))
  '(fstar-executable "fstar.exe")
  '(gdb-many-windows t t)
+ '(glasses-original-separator "-")
  '(glasses-separate-parentheses-p nil)
+ '(glasses-separator "-")
  '(gnus-logo-colors '("#2fdbde" "#c0c0c0") t)
  '(haskell-font-lock-symbols t)
  '(haskell-font-lock-symbols-alist
@@ -96,61 +98,61 @@
  '(rainbow-identifiers-cie-l*a*b*-saturation 35)
  '(safe-local-variable-values
    '((eval setq byte-compile-not-obsolete-vars
-      '(display-buffer-function))
+           '(display-buffer-function))
      (eval when
-      (require 'rainbow-mode nil t)
-      (rainbow-mode 1))
+           (require 'rainbow-mode nil t)
+           (rainbow-mode 1))
      (eval cl-flet
-      ((enhance-imenu-lisp
-        (&rest keywords)
-        (dolist
-            (keyword keywords)
-          (add-to-list 'lisp-imenu-generic-expression
-                       (list
-                        (purecopy
-                         (concat
-                          (capitalize keyword)
-                          (if
-                              (string=
-                               (substring-no-properties keyword -1)
-                               "s")
-                              "es" "s")))
-                        (purecopy
-                         (concat "^\\s-*("
-                                 (regexp-opt
-                                  (list
-                                   (concat "define-" keyword))
-                                  t)
-                                 "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
-                        2)))))
-      (enhance-imenu-lisp "bookmarklet-command" "class" "command" "ffi-method" "function" "mode" "parenscript" "user-class"))
+           ((enhance-imenu-lisp
+             (&rest keywords)
+             (dolist
+                 (keyword keywords)
+               (add-to-list 'lisp-imenu-generic-expression
+                            (list
+                             (purecopy
+                              (concat
+                               (capitalize keyword)
+                               (if
+                                   (string=
+                                    (substring-no-properties keyword -1)
+                                    "s")
+                                   "es" "s")))
+                             (purecopy
+                              (concat "^\\s-*("
+                                      (regexp-opt
+                                       (list
+                                        (concat "define-" keyword))
+                                       t)
+                                      "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                             2)))))
+           (enhance-imenu-lisp "bookmarklet-command" "class" "command" "ffi-method" "function" "mode" "parenscript" "user-class"))
      (Base . 10)
      (Syntax . Common-Lisp)
      (Package . Maxima)
      (eval cl-flet
-      ((enhance-imenu-lisp
-        (&rest keywords)
-        (dolist
-            (keyword keywords)
-          (add-to-list 'lisp-imenu-generic-expression
-                       (list
-                        (purecopy
-                         (concat
-                          (capitalize keyword)
-                          (if
-                              (string=
-                               (substring-no-properties keyword -1)
-                               "s")
-                              "es" "s")))
-                        (purecopy
-                         (concat "^\\s-*("
-                                 (regexp-opt
-                                  (list
-                                   (concat "define-" keyword))
-                                  t)
-                                 "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
-                        2)))))
-      (enhance-imenu-lisp "bookmarklet-command" "class" "command" "function" "mode" "parenscript" "user-class"))
+           ((enhance-imenu-lisp
+             (&rest keywords)
+             (dolist
+                 (keyword keywords)
+               (add-to-list 'lisp-imenu-generic-expression
+                            (list
+                             (purecopy
+                              (concat
+                               (capitalize keyword)
+                               (if
+                                   (string=
+                                    (substring-no-properties keyword -1)
+                                    "s")
+                                   "es" "s")))
+                             (purecopy
+                              (concat "^\\s-*("
+                                      (regexp-opt
+                                       (list
+                                        (concat "define-" keyword))
+                                       t)
+                                      "\\s-+\\(" lisp-mode-symbol-regexp "\\)"))
+                             2)))))
+           (enhance-imenu-lisp "bookmarklet-command" "class" "command" "function" "mode" "parenscript" "user-class"))
      (Syntax . ANSI-Common-Lisp)
      (Package . FSet)))
  '(scroll-bar-mode nil)
