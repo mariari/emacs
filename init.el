@@ -1,4 +1,4 @@
-;; Commentary:
+; Commentary:
 ;;; Code:
 
 ;;; Use straight.el and use-package for package management
@@ -262,6 +262,9 @@
 
 (use-package esup)
 
+(use-package hoon-mode :straight (:host github :repo "urbit/hoon-mode.el"))
+
+
 (use-package erc
   :straight nil
   :custom
@@ -447,7 +450,8 @@
   :config
   ;; on arch linux!
   (setq fuel-listener-factor-binary "/bin/factor-vm")
-  (setq fuel-listener-factor-image "~/.factor/factor/factor.image"))
+  (setq fuel-listener-factor-image "~/.factor/factor/factor.image")
+  :defer nil)
 
 ;; Lisp
 (setq *lisp-modes*
