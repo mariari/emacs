@@ -261,9 +261,6 @@
 
 (use-package esup)
 
-(use-package hoon-mode :straight (:host github :repo "urbit/hoon-mode.el"))
-
-
 (use-package erc
   :straight nil
   :custom
@@ -342,14 +339,20 @@
 ;;; Programming -----------------------------------------------------------
 ;; General
 (use-package lsp-mode
-    :config
+  :config
   (setq lsp-ui-doc-enable nil)
   (setq lsp-keymap-prefix "C-c s")
   (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
   :hook (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c s"))
                         (lsp-enable-which-key-integration))))
-  :hook (c-mode-common . lsp))
+  :hook (c-mode-common . lsp)
+  :hook (rustic-mode . lsp)
+  :hook (rust-mode . lsp))
+
+(use-package which-key
+  :after lsp-mode)
+
 
 (use-package yasnippet
   :hook (lsp-mode . yas-minor-mode))
@@ -391,7 +394,7 @@
   (smartparens-global-mode 1))
 
 (use-package xah-math-input
-  :straight (:host github :repo "emacsmirror/xah-math-input")
+  :straight (:host github :repo "emacsattic/xah-math-input")
   :defer nil
   :config
   (global-xah-math-input-mode 1)
@@ -438,6 +441,9 @@
 (use-package company-coq
   :hook coq-mode)
 
+(use-package proof-general
+  :hook coq-mode)
+
 ;; Elixir
 (use-package alchemist)
 (use-package elixir-mode
@@ -457,6 +463,23 @@
   (setq fuel-listener-factor-image "~/.factor/factor/factor.image")
   :defer nil)
 
+
+;; Hoon
+(use-package hoon-mode
+  :straight (:host github :repo "urbit/hoon-mode.el"))
+
+;; Java
+(use-package lsp-java
+  :hook (java-mode . lsp))
+
+;; Poplog
+(use-package pop-mode
+  :straight (:host github :repo "mariari/pop-mode"))
+(use-package inferior-pop-mode
+  :straight (:host github :repo "mariari/pop-mode"))
+(use-package pop-help-mode
+  :straight (:host github :repo "mariari/pop-mode"))
+
 ;; Lisp
 (setq *lisp-modes*
       '(common-lisp-mode
@@ -474,8 +497,8 @@
         slime-repl-mode
         inferior-lisp-mode
         mrepl-mode
-        sly-mrepl-mode
-        comint-mode))
+        ;; comint-mode
+        sly-mrepl-mode))
 
 (%use-package lispy
   :hook ,(gen-hooks *lisp-modes* 'lispy-mode)
@@ -532,7 +555,14 @@
 
 (use-package scheme-complete)
 
+(use-package rust-mode)
 
+(use-package rustic
+  :custom
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  :config
+  (rustic-doc-mode t)
+  (setf lsp-rust-server 'rust-analyzer))
 
 ;; (straight-use-package '(sly :source el-get))
 
