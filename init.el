@@ -178,6 +178,7 @@
 
 (use-package poporg)
 (use-package org
+  ;; :straight (:host github :repo "emacs-straight/org-mode")
   :hook ((org-mode . auto-fill-mode))
   :mode ("\\.\\(org\\|txt\\)$" . org-mode)
   :config
