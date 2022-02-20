@@ -97,6 +97,9 @@
 (use-package ag
   :defer nil)
 
+(use-package project
+  :bind (("C-x C-d" . project-find-file)))
+
 ;; then run wgrep-change-to-wrgrep-cmode C-cp to make the buffer editable
 (use-package wgrep
   :after ag)
