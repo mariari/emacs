@@ -178,7 +178,7 @@
 
 (use-package poporg)
 (use-package org
-  ;; :straight (:host github :repo "emacs-straight/org-mode")
+  :straight (:host github :repo "emacs-straight/org-mode")
   :hook ((org-mode . auto-fill-mode))
   :mode ("\\.\\(org\\|txt\\)$" . org-mode)
   :config
@@ -406,6 +406,10 @@
   (xah-math-input--add-cycle ["-o" "⊸"]))
 
 ;;; Languages (In alphabetical order)
+(use-package agda2-mode
+  :config (setq agda2-version "2.6.2"))
+
+
 ;; BNF
 (use-package bnf-mode)
 
@@ -571,8 +575,15 @@
 ;; (straight-use-package '(sly :source el-get))
 
 (use-package sly
-    :config
+  :config
   (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  (font-lock-add-keywords
+   'lisp-mode
+   '(("ctypecase-of" . font-lock-keyword-face)
+     ("etypecase-of" . font-lock-keyword-face)
+     ("typecase-of" . font-lock-keyword-face)
+     ("match-of" . font-lock-keyword-face)
+     ("match" . font-lock-keyword-face)))
   ;; (setq inferior-lisp-program "clasp")
   )
 
@@ -607,10 +618,10 @@
 ;; (put 'defmodule 'common-lisp-indent-function
 ;;      (list 4 '&lambda 2 '&body))
 
-;; (font-lock-add-keywords
-;;  'lisp-mode
-;;  '(("defmodule"
-;;     2 font-lock-function-name-face font-lock-preprocessor-face t)))
+;; 2 font-lock-function-name-face font-lock-preprocessor-face t
+
+;; Idris
+(use-package idris-mode)
 
 
 ;; Haskell

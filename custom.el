@@ -33,7 +33,7 @@
  '(flyspell-default-dictionary "en_US")
  '(fringe-mode '(1 . 1) nil (fringe))
  '(fstar-executable "fstar.exe")
- '(gdb-many-windows t t)
+ '(gdb-many-windows t)
  '(glasses-original-separator "-")
  '(glasses-separate-parentheses-p nil)
  '(glasses-separator "-")
@@ -97,7 +97,8 @@
  '(rainbow-identifiers-cie-l*a*b*-lightness 30)
  '(rainbow-identifiers-cie-l*a*b*-saturation 35)
  '(safe-local-variable-values
-   '((eval setq byte-compile-not-obsolete-vars
+   '((put 'our-let* 'scheme-indent-function 1)
+     (eval setq byte-compile-not-obsolete-vars
            '(display-buffer-function))
      (eval when
            (require 'rainbow-mode nil t)
