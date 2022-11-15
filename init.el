@@ -176,6 +176,7 @@
   (setq-default bidi-paragraph-direction 'left-to-right)
   (setq bidi-inhibit-bpa t))
 
+
 (use-package poporg)
 (use-package org
   :straight (:host github :repo "emacs-straight/org-mode")
@@ -574,6 +575,20 @@
 
 ;; (straight-use-package '(sly :source el-get))
 
+;; (push "~/holder/lisp-system-browser/" load-path)
+
+;; (use-package window-layout)
+
+;; (use-package lisp-system-browser
+;;   :straight (:host github :repo "enometh/lisp-system-browser" :branch :madhu)
+;;   :config
+;;   (sly-contrib)
+;;   (push 'system-browser sly-contribs)
+;;   (sly-enable-contrib 'system-browser))
+
+(use-package eglot-argot
+  :straight (:host gitlab :repo "GrammaTech/Mnemosyne/eglot-argot"))
+
 (use-package sly
   :config
   (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
@@ -621,7 +636,12 @@
 ;; 2 font-lock-function-name-face font-lock-preprocessor-face t
 
 ;; Idris
-(use-package idris-mode)
+;; Idris 1.3.4
+;; (use-package idris-mode)
+
+;; Idris 2
+
+(use-package idris2 :straight (:host github :repo "idris-community/idris2-mode"))
 
 
 ;; Haskell
@@ -634,6 +654,11 @@
   :hook (haskell-mode . lsp))
 (use-package lsp-haskell
   :after lsp)
+
+;; Juvix
+(use-package juvix :straight (:host github
+                                    :repo "anoma/juvix"
+                                    :files ("juvix-mode/*")))
 
 ;; Ocaml
 (use-package merlin-eldoc)
@@ -876,8 +901,12 @@
           ("double"      . ?𝔻))))
 
 
+(setq warning-suppress-types '((comp)))
+(setq warning-minimum-level :emergency)
+
 ;; Enable ligatures without prettify-symbols
 ;; For Emacs 25
+
 
 (use-package emacs-pragmatapor-ligatures
   :straight (:host github :repo "lumiknit/emacs-pragmatapro-ligatures")
@@ -887,6 +916,34 @@
   (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
   (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
   (add-hook 'haskell-interactive-mode 'pragmatapro-lig-mode))
+
+(use-package el-patch
+  :defer nil
+  :config
+  ;; Respect the value of `lexical-binding'.
+  (defun el-patch-eval-template (name type)
+    (interactive (el-patch--select-template))
+    (eval (el-patch--resolve-template name type)
+          lexical-binding)))
+
+(defun use-fancy-splash-screens-p () t)
+(use-package fancy-splash-animation
+  :straight nil :defer nil
+  :config
+  (setq fancy-splash-image "~/.emacs.d/alice-cookie.gif")
+  (el-patch-define-and-eval-template
+   (defun fancy-splash-head)
+   (let* ...
+     (el-patch-add
+       (when (image-multi-frame-p img)
+         (image--set-property img :height 300)
+         (image--set-property img :mask '(heuristic t))
+         (setq image-width (car (image-size img)))
+         (image-animate img 0 t)))
+     (when img
+       ...))))
+
+
 
 ;; breaks lispy in the sly repl?
 ;; (my-multi-add-hook 'my-pretty-lambda
