@@ -490,6 +490,13 @@
   :straight (:host github :repo "mariari/pop-mode"))
 
 ;; Lisp
+
+;; ACL2
+;; (push "~/Documents/Workspace/Lisp/acl2/books/emacs" load-path)
+;; (load "~/Documents/Workspace/Lisp/acl2/books/emacs/emacs-acl2.el")
+;; (setq inferior-acl2-program "~/Documents/Workspace/Lisp/acl2/saved_acl2")
+
+
 (setq *lisp-modes*
       '(common-lisp-mode
         emacs-lisp-mode
@@ -591,7 +598,7 @@
 
 (use-package sly
   :config
-  (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  ;; (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
   (font-lock-add-keywords
    'lisp-mode
    '(("ctypecase-of" . font-lock-keyword-face)
@@ -599,8 +606,34 @@
      ("typecase-of" . font-lock-keyword-face)
      ("match-of" . font-lock-keyword-face)
      ("match" . font-lock-keyword-face)))
-  ;; (setq inferior-lisp-program "clasp")
-  )
+  ;; ACL2
+  (setf sly-lisp-implementations
+        `((ros ("ros" "run" "-l"  "~/.sbclrc"))
+          (acl2 ("~/.local/acl2") :init sly-init-using-acl2)))
+
+  (defun sly-init-using-acl2 (port-filename coding-system)
+    "Return a string to initialize Lisp using ASDF.
+Fall back to `sly-init-using-slynk-loader' if ASDF fails."
+    (format "%S\n\n%S\n\n%S %S\n\n"
+            '(set-raw-mode-on!)
+            `(cond ((ignore-errors
+                      (funcall 'require "asdf")
+                      (funcall (read-from-string "asdf:version-satisfies")
+                               (funcall (read-from-string "asdf:asdf-version"))
+                               "2.019"))
+                    (push (pathname ,(sly-to-lisp-filename (sly-slynk-path)))
+                          (symbol-value
+                           (read-from-string "asdf:*central-registry*")))
+                    (funcall
+                     (read-from-string "asdf:load-system")
+                     :slynk)
+                    (funcall
+                     (read-from-string "slynk:start-server")
+                     ,(sly-to-lisp-filename port-filename)))
+                   (t
+                    ,(read (sly-init-using-slynk-loader port-filename
+                                                        coding-system))))
+            :set-raw-mode nil)))
 
 ;; (use-package slime
 ;;     :config
