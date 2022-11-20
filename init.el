@@ -92,6 +92,11 @@
 
 (use-package edit-indirect)
 
+(use-package right-click-context
+  :defer nil
+  :config
+  (right-click-context-mode 1))
+
 ;; Useful for refactoring code do
 ;; ag-project-regexp
 (use-package ag
@@ -598,7 +603,7 @@
 
 (use-package sly
   :config
-  ;; (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
   (font-lock-add-keywords
    'lisp-mode
    '(("ctypecase-of" . font-lock-keyword-face)
@@ -609,13 +614,14 @@
   ;; ACL2
   (setf sly-lisp-implementations
         `((ros ("ros" "run" "-l"  "~/.sbclrc"))
-          (acl2 ("~/.local/acl2") :init sly-init-using-acl2)))
+          (acl2 ("~/.local/bin/acl2") :init sly-init-using-acl2)))
 
   (defun sly-init-using-acl2 (port-filename coding-system)
     "Return a string to initialize Lisp using ASDF.
 Fall back to `sly-init-using-slynk-loader' if ASDF fails."
     (format "%S\n\n%S\n\n%S %S\n\n"
             '(set-raw-mode-on!)
+            ;; sly-init-using-asdf
             `(cond ((ignore-errors
                       (funcall 'require "asdf")
                       (funcall (read-from-string "asdf:version-satisfies")
