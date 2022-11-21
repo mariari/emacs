@@ -246,7 +246,9 @@
 
 ;;; Tools and Utilities
 (use-package magit
-  :bind ("C-x g" . magit-status))
+  :bind ("C-x g" . magit-status)
+  ;; why did this suddenly act up!?
+  (setq with-editor-emacsclient-executable nil))
 
 (use-package gemini-mode)
 
