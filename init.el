@@ -248,6 +248,7 @@
 (use-package magit
   :bind ("C-x g" . magit-status)
   ;; why did this suddenly act up!?
+  :config
   (setq with-editor-emacsclient-executable nil))
 
 (use-package gemini-mode)
@@ -618,6 +619,11 @@
         `((ros ("ros" "run" "-l"  "~/.sbclrc"))
           (acl2 ("~/.local/bin/acl2") :init sly-init-using-acl2)))
 
+  (defun sly-init-using-acl2 (port-filename coding-system)
+    "Return a string to initialize Lisp using ASDF.
+     Fall back to `sly-init-using-slynk-loader' if ASDF fails."
+    (format ":q\n\n%s\n\n(lp)\n\n"
+            (sly-init-using-asdf port-filename coding-system)))
   (defun sly-init-using-acl2 (port-filename coding-system)
     "Return a string to initialize Lisp using ASDF.
 Fall back to `sly-init-using-slynk-loader' if ASDF fails."
