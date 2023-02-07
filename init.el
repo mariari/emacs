@@ -249,7 +249,16 @@
   :bind ("C-x g" . magit-status)
   ;; why did this suddenly act up!?
   :config
-  (setq with-editor-emacsclient-executable nil))
+  (setq with-editor-emacsclient-executable nil)
+  (defun magit-merge-octopus (args &rest revs)
+    "Merge all given REVS into current branch."
+    (interactive
+     (list (magit-merge-arguments)
+           (completing-read-multiple
+            "Merge (rev,s): " (magit-list-refnames)
+            nil nil nil 'magit-revision-history
+            (magit-branch-or-commit-at-point))))
+    (magit-run-git-async "merge" "--no-edit" args revs)))
 
 (use-package gemini-mode)
 
