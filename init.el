@@ -22,6 +22,10 @@
       browse-url-generic-program "nyxt")
 
 (menu-bar-mode -1)
+
+(setq max-lisp-eval-depth 10000)
+(setq max-specpdl-size 10000)
+
 (delete-selection-mode 1)
 
 ;;; Custom functions ----------------------------------------------------
@@ -462,9 +466,28 @@
   :hook coq-mode)
 
 ;; Elixir
-(use-package alchemist)
+;; Sadly alchemist is deprecated, so we have to deal with lsp ☹
+;; (use-package alchemist)
 (use-package elixir-mode
-  :hook alchemist-mode)
+  ;; doesn't work for some odd reason
+  :hook eglot-ensure
+  :hook inf-elixir
+  :config
+  (add-hook 'elixir-mode-hook 'eglot-ensure))
+
+(use-package inf-elixir
+  :bind (("C-c i i" . 'inf-elixir)
+         ("C-c i p" . 'inf-elixir-project)
+         ("C-c i l" . 'inf-elixir-send-line)
+         ("C-c i r" . 'inf-elixir-send-region)
+         ("C-c C-l" . 'inf-elixir-send-buffer)
+         ("C-c C-r" . 'inf-elixir-reload-module)
+         ("C-c i R" . 'inf-elixir-reload-module)
+         ("C-c i b" . 'inf-elixir-send-buffer)))
+
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs '(elixir-mode "elixir-ls")))
 
 ;; F*
 (use-package fstar-mode
@@ -892,7 +915,7 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
           ;; ("!="        . 8800)       ; ≠
           ("in"        . 8712)          ; ∈
           ("*"          . ?×)
-          ("when"        . ?⟺)
+          ;; ("when"        . ?⟺)
           ;; (">="          . ?≥)
           ;; ("<="          . ?≤)
           ("union"       . ?∪)
