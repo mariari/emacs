@@ -12,12 +12,20 @@
 
 (setq byte-compile-warnings '(cl-functions))
 
-(set-fontset-font t nil (font-spec :size 20 :name "WenQuanYi Micro Hei Mono:antialias=true"))
+;; (set-fontset-font t nil (font-spec :size 20 :name "WenQuanYi Micro Hei Mono:antialias=true"))
+(set-fontset-font t nil  (font-spec :size 20 :name "HanWangKaiMediumChuIn:antialias=true"))
 
+(set-fontset-font "fontset-default" 'han                 ; works
+                  "HanWangKaiMediumChuIn:antialias=true" nil 'prepend)
 
+(set-fontset-font "fontset-default" 'cjk-misc            ; works
+                  "HanWangKaiMediumChuIn:antialias=true" nil 'prepend)
+
+;; (set-fontset-font t nil  (font-spec :size 20 :name "王漢宗中楷體注音:antialias=true"))
+;;  我4
 (global-set-key (kbd "C-S-<iso-lefttab>") 'indent-relative)
 
-
+(setf use-default-font-for-symbols nil)
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "nyxt")
 
@@ -475,6 +483,10 @@
   :config
   (add-hook 'elixir-mode-hook 'eglot-ensure))
 
+(use-package apprentice :straight (:host github
+                                         :repo "Sasanidas/Apprentice"))
+
+
 (use-package inf-elixir
   :bind (("C-c i i" . 'inf-elixir)
          ("C-c i p" . 'inf-elixir-project)
@@ -630,6 +642,7 @@
 (use-package sly
   :config
   (setq inferior-lisp-program "ros run  -l ~/.sbclrc")
+  ;; (add-to-list 'sly-contribs 'sly-asdf 'append)
   (font-lock-add-keywords
    'lisp-mode
    '(("ctypecase-of" . font-lock-keyword-face)
@@ -690,8 +703,9 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
 ;;                  slime-xref-browser))
 ;;   (setq inferior-lisp-program "ros run  -l ~/.sbclrc"))
 
-;; (use-package sly-asdf :straight nil :ensure t)
-;; (use-package sly-macrostep :straight nil :ensure t)
+(use-package sly-asdf)
+(use-package sly-macrostep)
+;; (use-package sly-stepper)
 
 ; CL indentation and font things
 
@@ -726,9 +740,9 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
   :after lsp)
 
 ;; Juvix
-(use-package juvix :straight (:host github
-                                    :repo "anoma/juvix"
-                                    :files ("juvix-mode/*")))
+;; (use-package juvix :straight (:host github
+;;                                     :repo "anoma/juvix"
+;;                                     :files ("juvix-mode/*")))
 
 ;; Ocaml
 (use-package merlin-eldoc)
