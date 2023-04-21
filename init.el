@@ -362,6 +362,7 @@
          ("C-c ," . iy-go-to-or-up-to-continue-backward)))
 
 ;;; Programming -----------------------------------------------------------
+
 ;; General
 (use-package lsp-mode
   :config
@@ -427,8 +428,13 @@
   (xah-math-input--add-cycle ["-o" "⊸"]))
 
 ;;; Languages (In alphabetical order)
+
 (use-package agda2-mode
   :config (setq agda2-version "2.6.2"))
+
+;; Assembly
+
+(use-package nasm-mode)
 
 
 ;; BNF
