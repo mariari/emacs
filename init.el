@@ -522,6 +522,13 @@
   :defer nil)
 
 
+(use-package forth-mode
+  :config
+  (add-hook 'forth-interaction-mode-hook
+          (lambda ()
+            (tf-toggle-show-trailing-whitespace))))
+
+
 ;; Hoon
 (use-package hoon-mode
   :straight (:host github :repo "urbit/hoon-mode.el"))
