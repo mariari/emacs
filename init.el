@@ -65,6 +65,7 @@
 
 (add-hook 'Info-mode-hook
           (lambda ()
+            (turn-off-evil-mode)
             (tf-toggle-show-trailing-whitespace)))
 
 ;;; Package Configuration  ------------------------------------------------
