@@ -370,12 +370,17 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-keymap-prefix "C-c s")
   (define-key lsp-mode-map (kbd "C-c s") lsp-command-map)
+  (add-to-list 'exec-path "./deps/elixir-ls")
+  (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  (define-key lsp-mode-map (kbd "C-c u") #'lsp-ui-imenu)
   :hook (lsp-mode . (lambda ()
                       (let ((lsp-keymap-prefix "C-c s"))
                         (lsp-enable-which-key-integration))))
   :hook (c-mode-common . lsp)
   :hook (rustic-mode . lsp)
-  :hook (rust-mode . lsp))
+  :hook (rust-mode . lsp)
+  :hook (elixir-mode . lsp))
 
 (use-package which-key
   :after lsp-mode)
@@ -400,6 +405,9 @@
   :bind (("C-<tab>" . company-manual-begin)
          :map company-active-map
          ("<tab>" . company-manual-begin)))
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 (use-package rainbow-delimiters)
 
@@ -483,12 +491,47 @@
 ;; Elixir
 ;; Sadly alchemist is deprecated, so we have to deal with lsp ☹
 ;; (use-package alchemist)
+(use-package dap-mode
+  :config
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra)))
+  (dap-register-debug-template
+   "Elixir debug all tests"
+   ;; running all tests
+   (list :type "Elixir"
+         :cwd nil
+         :request "launch"
+         :startApps t
+         :program nil
+         :name "Elixir debug all tests"
+         :dap-server-path '("~/.emacs.d/deps/elixir-ls/debugger.sh")))
+  ;;  misc test
+  (dap-register-debug-template
+   "Elixir Misc Debug Single Test: block"
+   (list :type "Elixir"
+         :cwd nil
+         :request "launch"
+         :program nil
+         :name "Elixir Debug Single Test: Ref Integrity Test"
+         :startApps t
+         :dap-server-path '("~/.emacs.d/deps/elixir-ls/debugger.sh")
+         ;; tune this to your test
+         :taskArgs '("test/narwhal_test.exs:45")
+         :requireFiles '("test/**/test_helper.exs"
+                         "test/narwhal_test.exs:45"))))
+
+(use-package elixir-ls
+  :straight (:host github :repo "elixir-lsp/elixir-ls"))
+
 (use-package elixir-mode
   ;; doesn't work for some odd reason
-  :hook eglot-ensure
+  ;; :hook lsp
   :hook inf-elixir
+  ;; :hook dap-mode
   :config
-  (add-hook 'elixir-mode-hook 'eglot-ensure))
+  (require 'dap-elixir)
+  ;; (add-hook 'elixir-mode-hook 'eglot-ensure)
+  )
 
 (use-package apprentice :straight (:host github
                                          :repo "Sasanidas/Apprentice"))
@@ -504,9 +547,9 @@
          ("C-c i R" . 'inf-elixir-reload-module)
          ("C-c i b" . 'inf-elixir-send-buffer)))
 
-(use-package eglot
-  :config
-  (add-to-list 'eglot-server-programs '(elixir-mode "elixir-ls")))
+;; (use-package eglot
+;;   :config
+;;   (add-to-list 'eglot-server-programs '(elixir-mode "elixir-ls")))
 
 ;; F*
 (use-package fstar-mode

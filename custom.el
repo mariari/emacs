@@ -21,7 +21,7 @@
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(coq-prog-args
    '("-R" "/home/loli/Documents/Workspace/proofs/coq/cpdt/cpdt/src" "Cpdt"))
- '(custom-enabled-themes nil)
+ '(custom-enabled-themes '(modus-operandi))
  '(custom-safe-themes
    '("e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "53269dd72d299a2c74adee2647b6314ad1ebe3ab627ab8655c353a17c4393835" default))
  '(evil-emacs-state-cursor '("#E57373" hbar) t)
@@ -72,6 +72,9 @@
  '(lisp-lambda-list-keyword-alignment t)
  '(lisp-lambda-list-keyword-parameter-alignment t)
  '(lispy-no-space t)
+ '(lsp-ui-imenu-auto-refresh t)
+ '(lsp-ui-imenu-colors '("deep sky blue" "green3" "indian red"))
+ '(lsp-ui-peek-list-width 60)
  '(lsp-ui-sideline-enable nil)
  '(main-line-color1 "#191919")
  '(main-line-color2 "#111111")
