@@ -791,15 +791,15 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
 
 
 ;; Haskell
-(use-package haskell-mode
-  :bind (:map haskell-mode-map
-              ("C-c C-r" . haskell-process-reload)
-              ("C-c C-z" . haskell-interactive-switch-back)
-              ("C-c C-t" . haskell-session-change-target)
-              ("C-c C-l" . haskell-process-load-file))
-  :hook (haskell-mode . lsp))
-(use-package lsp-haskell
-  :after lsp)
+;; (use-package haskell-mode
+;;   :bind (:map haskell-mode-map
+;;               ("C-c C-r" . haskell-process-reload)
+;;               ("C-c C-z" . haskell-interactive-switch-back)
+;;               ("C-c C-t" . haskell-session-change-target)
+;;               ("C-c C-l" . haskell-process-load-file))
+;;   :hook (haskell-mode . lsp))
+;; (use-package lsp-haskell
+;;   :after lsp)
 
 ;; Juvix
 ;; (use-package juvix :straight (:host github
