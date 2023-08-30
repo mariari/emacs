@@ -12,14 +12,16 @@
 
 (setq byte-compile-warnings '(cl-functions))
 
+;; DFPYuanW7\-ZhuIn:antialias=true
 ;; (set-fontset-font t nil (font-spec :size 20 :name "WenQuanYi Micro Hei Mono:antialias=true"))
-(set-fontset-font t nil  (font-spec :size 20 :name "HanWangKaiMediumChuIn:antialias=true"))
+;; (set-fontset-font t nil  (font-spec :size 20 :name "HanWangKaiMediumChuIn:antialias=true"))
+(set-fontset-font t nil  (font-spec :size 20 :name "DFPYuanW7-ZhuIn:antialias=true"))
 
 (set-fontset-font "fontset-default" 'han                 ; works
-                  "HanWangKaiMediumChuIn:antialias=true" nil 'prepend)
+                  "DFPYuanW7-ZhuIn:antialias=true" nil 'prepend)
 
 (set-fontset-font "fontset-default" 'cjk-misc            ; works
-                  "HanWangKaiMediumChuIn:antialias=true" nil 'prepend)
+                  "DFPYuanW7-ZhuIn:antialias=true" nil 'prepend)
 
 ;; (set-fontset-font t nil  (font-spec :size 20 :name "王漢宗中楷體注音:antialias=true"))
 ;;  我4
