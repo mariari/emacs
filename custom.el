@@ -21,9 +21,9 @@
  '(company-quickhelp-color-foreground "#DCDCCC")
  '(coq-prog-args
    '("-R" "/home/loli/Documents/Workspace/proofs/coq/cpdt/cpdt/src" "Cpdt"))
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes nil)
  '(custom-safe-themes
-   '("e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "53269dd72d299a2c74adee2647b6314ad1ebe3ab627ab8655c353a17c4393835" default))
+   '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" "53269dd72d299a2c74adee2647b6314ad1ebe3ab627ab8655c353a17c4393835" default))
  '(evil-emacs-state-cursor '("#E57373" hbar) t)
  '(evil-insert-state-cursor '("#E57373" bar) t)
  '(evil-normal-state-cursor '("#FFEE58" box) t)

@@ -372,8 +372,8 @@
   (setq lsp-ui-doc-enable nil)
   (setq lsp-keymap-prefix "C-c")
   (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
-  (add-to-list 'exec-path "./deps/elixir-ls")
-  (add-to-list 'exec-path "./deps/erlang_ls")
+  (add-to-list 'exec-path "~/.emacs.d/deps/elixir-ls")
+  (add-to-list 'exec-path "~/.emacs.d/deps/erlang_ls")
   (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   (define-key lsp-mode-map (kbd "C-c u") #'lsp-ui-imenu)
@@ -584,7 +584,10 @@
 
 ;; Hoon
 (use-package hoon-mode
-  :straight (:host github :repo "urbit/hoon-mode.el"))
+  :straight (:host github :repo "urbit/hoon-mode.el")
+  :config
+  ;; (setq eldoc-echo-area-prefer-doc-buffer t)
+  )
 
 ;; Java
 (use-package lsp-java
@@ -645,6 +648,8 @@
 
 (use-package geiser-chez)
 (use-package geiser-racket)
+
+(use-package protobuf-mode)
 
 (use-package racket-mode
   :config
