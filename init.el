@@ -420,6 +420,23 @@
 
 (use-package rainbow-mode)
 
+(defun my-file-contents (filename)
+  "Return the contents of FILENAME."
+  (with-temp-buffer
+    (insert-file-contents filename)
+    (buffer-string)))
+
+
+(use-package gpt
+  :defer nil
+  :config
+  (setq gpt-openai-engine "gpt-4o"))
+
+(require 'gpt)
+(setq gpt-openai-key (my-file-contents "~/.emacs.d/key"))
+(global-set-key (kbd "C-c g") 'gpt-dwim-all-buffers)
+(global-set-key (kbd "M-C-g") 'gpt-dwim)
+
 (use-package highlight-parentheses
   :defer nil
   :config
