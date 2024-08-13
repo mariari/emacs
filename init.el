@@ -29,7 +29,7 @@
 
 (setf use-default-font-for-symbols nil)
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "nyxt")
+      browse-url-generic-program "firefox")
 
 (menu-bar-mode -1)
 
@@ -184,12 +184,16 @@
   (:map help-map
    ("W" . woman)))
 
+(use-package yafolding
+  :hook ((prog-mode . yafolding-mode)))
+
 ;;; Text Processing
 (use-package flyspell
   :config
   (setq flyspell-default-dictionary "en_US")
   :hook ((prog-mode . flyspell-prog-mode)
-         (org-mode . flyspell-mode)))
+         (org-mode . flyspell-mode)
+         (markdown-mode . flyspell-mode)))
 
 (use-package bidi
   :config
