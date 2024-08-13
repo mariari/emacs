@@ -413,9 +413,6 @@
          :map company-active-map
          ("<tab>" . company-manual-begin)))
 
-(use-package company-box
-  :hook (company-mode . company-box-mode))
-
 (use-package rainbow-delimiters)
 
 (use-package rainbow-mode)
