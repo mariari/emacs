@@ -380,8 +380,9 @@
   :config
   (setq lsp-ui-doc-enable nil)
   (setq lsp-keymap-prefix "C-c")
+  (setq lsp-modeline-code-actions-segments '(count icon name))
   (define-key lsp-mode-map (kbd "C-c") lsp-command-map)
-  (add-to-list 'exec-path "~/.emacs.d/deps/elixir-ls")
+  ;; (add-to-list 'exec-path "~/.emacs.d/deps/elixir-ls")
   (add-to-list 'exec-path "~/.emacs.d/deps/erlang_ls")
   (define-key lsp-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
   (define-key lsp-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
@@ -524,36 +525,16 @@
 (use-package dap-mode
   :config
   (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'dap-hydra)))
-  (dap-register-debug-template
-   "Elixir debug all tests"
-   ;; running all tests
-   (list :type "Elixir"
-         :cwd nil
-         :request "launch"
-         :startApps t
-         :program nil
-         :name "Elixir debug all tests"
-         :dap-server-path '("~/.emacs.d/deps/elixir-ls/debugger.sh")))
-  ;;  misc test
-  (dap-register-debug-template
-   "Elixir Misc Debug Single Test: block"
-   (list :type "Elixir"
-         :cwd nil
-         :request "launch"
-         :program nil
-         :name "Elixir Debug Single Test: Ref Integrity Test"
-         :startApps t
-         :dap-server-path '("~/.emacs.d/deps/elixir-ls/debugger.sh")
-         ;; tune this to your test
-         :taskArgs '("test/narwhal_test.exs:45")
-         :requireFiles '("test/**/test_helper.exs"
-                         "test/narwhal_test.exs:45"))))
+            (lambda (arg) (call-interactively #'dap-hydra))))
 
 (use-package erlang)
 
-(use-package elixir-ls
-  :straight (:host github :repo "elixir-lsp/elixir-ls"))
+;; (use-package elixir-ls
+;;   :straight (:host github :repo "elixir-lsp/elixir-ls")
+;;   :config
+;;   :custom
+;;   ;; (setf lsp-elixir-dialyzer-warn-opts '("error_handling" "no_improper_lists"))
+;;   (setf lsp-elixir-dialyzer-warn-opts nil))
 
 (use-package elixir-mode
   ;; doesn't work for some odd reason
@@ -561,9 +542,10 @@
   :hook inf-elixir
   ;; :hook dap-mode
   :config
-  (require 'dap-elixir)
+  ;; (require 'dap-elixir)
   ;; (add-hook 'elixir-mode-hook 'eglot-ensure)
-  )
+  :custom
+  (lsp-elixir-server-command '("~/.emacs.d/deps/lexical/_build/dev/package/lexical/bin/start_lexical.sh")))
 
 (use-package apprentice :straight (:host github
                                          :repo "Sasanidas/Apprentice"))
