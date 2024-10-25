@@ -837,9 +837,10 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
 ;;   :after lsp)
 
 ;; Juvix
-;; (use-package juvix :straight (:host github
-;;                                     :repo "anoma/juvix"
-;;                                     :files ("juvix-mode/*")))
+(use-package juvix :straight (:host github :repo "anoma/juvix-mode")
+  :config
+  (setf juvix-global-flags '("--no-termination"))
+  (require 'juvix-mode nil))
 
 ;; Ocaml
 (use-package merlin-eldoc)
