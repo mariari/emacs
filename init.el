@@ -609,12 +609,33 @@
 (use-package hoon-mode
   :straight (:host github :repo "urbit/hoon-mode.el")
   :config
-  ;; (setq eldoc-echo-area-prefer-doc-buffer t)
-  )
+  (add-hook 'hoon-mode #'lsp)
+  (add-hook 'forth-interaction-mode-hook
+            (lambda ()
+              (tf-toggle-show-trailing-whitespace)))
+  (setq eldoc-echo-area-prefer-doc-buffer t)
+  (eval-after-load "lsp-mode"
+    (if hoon-lsp-enable
+        '(progn
+           (add-to-list 'lsp-language-id-configuration '(hoon-mode . "hoon"))
+           (lsp-register-client
+            (make-lsp-client :new-connection
+                             (lsp-stdio-connection `("hoon-language-server"
+                                                     ,(concat "-p=" hoon-lsp-port)
+                                                     ,(concat "-s=" hoon-lsp-planet)
+                                                     ,(concat "-c=" hoon-lsp-code)
+                                                     ,(concat "-d=" hoon-lsp-delay)))
+                             :major-modes '(hoon-mode)
+                             :server-id 'hoon-ls))
+           (add-hook 'hoon-mode-hook #'lsp))
+      '())))
 
 ;; Java
 (use-package lsp-java
   :hook (java-mode . lsp))
+
+(use-package typescript-mode
+  :hook (typescript-mode . lsp))
 
 ;; Poplog
 (use-package pop-mode
