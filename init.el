@@ -86,6 +86,11 @@
 (use-package ace-window
   :bind ("M-p" . ace-window))
 
+(use-package glasses
+  :defer nil
+  :hook ((juvix-mode . glasses-mode)
+         (elixir-mode . glasses-mode)))
+
 (use-package popwin
   :defer nil
   :config
