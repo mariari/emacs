@@ -1090,14 +1090,14 @@ Fall back to `sly-init-using-slynk-loader' if ASDF fails."
 ;; For Emacs 25
 
 
-(use-package emacs-pragmatapor-ligatures
-  :straight (:host github :repo "lumiknit/emacs-pragmatapro-ligatures")
-  :defer nil
-  :config
-  (require 'pragmatapro-lig)
-  (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
-  (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
-  (add-hook 'haskell-interactive-mode 'pragmatapro-lig-mode))
+;; (use-package emacs-pragmatapor-ligatures
+;;   :straight (:host github :repo "lumiknit/emacs-pragmatapro-ligatures")
+;;   :defer nil
+;;   :config
+;;   (require 'pragmatapro-lig)
+;;   (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
+;;   (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
+;;   (add-hook 'haskell-interactive-mode 'pragmatapro-lig-mode))
 
 (use-package el-patch
   :defer nil
