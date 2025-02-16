@@ -627,6 +627,13 @@
 (use-package pop-help-mode
   :straight (:host github :repo "mariari/pop-mode"))
 
+;; Prolog
+(straight-use-package '(sweeprolog :files (:defaults "*.pl")))
+(use-package sweeprolog
+  :mode ("\\.\\(lgt\\|plt?\\)$" . sweeprolog-mode)
+  :config
+  (setq sweeprolog-swipl-path "/usr/bin/swipl"))
+
 ;; Lisp
 
 ;; ACL2
