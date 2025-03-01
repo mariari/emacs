@@ -25,9 +25,15 @@
  '(coq-prog-args
    '("-R" "/home/loli/Documents/Workspace/proofs/coq/cpdt/cpdt/src"
      "Cpdt"))
- '(custom-enabled-themes nil)
+ '(custom-enabled-themes '(2024-sweeprolog-pce))
  '(custom-safe-themes
-   '("f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7"
+   '("529b52311af68497b3119383fada745c93e56104d7c217f09da3a7e1237e19d3"
+     "918a7c78d7d0ab761c26734b36b1b05cd1586b6ab89e60ebeae8df33f106c1c6"
+     "c9248a3392e49cab0859d2eef2cf0c490ca39fb159e0586b6c30fe705e1a3981"
+     "43c3db605758dd23dd03fcc547587847dce76ba94757a21d1dfaf8aa9a5ffe42"
+     "8896994441276c7ae32463776d5cbb71b51d8e3241b1b7c981306a3c4fbead07"
+     "18cf5d20a45ea1dff2e2ffd6fbcd15082f9aa9705011a3929e77129a971d1cb3"
+     "f366d4bc6d14dcac2963d45df51956b2409a15b770ec2f6d730e73ce0ca5c8a7"
      "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9"
      "53269dd72d299a2c74adee2647b6314ad1ebe3ab627ab8655c353a17c4393835"
      default))
