@@ -529,12 +529,13 @@
 
 (use-package erlang)
 
-;; (use-package elixir-ls
-;;   :straight (:host github :repo "elixir-lsp/elixir-ls")
-;;   :config
-;;   :custom
-;;   ;; (setf lsp-elixir-dialyzer-warn-opts '("error_handling" "no_improper_lists"))
-;;   (setf lsp-elixir-dialyzer-warn-opts nil))
+(use-package elixir-ls
+  :straight (:host github :repo "elixir-lsp/elixir-ls")
+  :config
+  :custom
+  ;; (setf lsp-elixir-dialyzer-warn-opts '("error_handling" "no_improper_lists"))
+  ;; (setf lsp-elixir-dialyzer-warn-opts nil)
+  )
 
 (use-package elixir-mode
   ;; doesn't work for some odd reason
@@ -545,7 +546,8 @@
   ;; (require 'dap-elixir)
   ;; (add-hook 'elixir-mode-hook 'eglot-ensure)
   :custom
-  (lsp-elixir-server-command '("~/.emacs.d/deps/lexical/_build/dev/package/lexical/bin/start_lexical.sh")))
+  ;; (lsp-elixir-server-command '("~/.emacs.d/deps/lexical/_build/dev/package/lexical/bin/start_lexical.sh"))
+  )
 
 (use-package apprentice :straight (:host github
                                          :repo "Sasanidas/Apprentice"))
