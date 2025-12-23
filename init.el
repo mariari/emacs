@@ -634,6 +634,7 @@
 (use-package sweeprolog
   :mode ("\\.\\(lgt\\|plt?\\)$" . sweeprolog-mode)
   :config
+  (setq sweeprolog-top-level-persistent-history "~/.emacs.d/.sweep-history")
   (setq sweeprolog-swipl-path "/usr/bin/swipl"))
 
 ;; Lisp
